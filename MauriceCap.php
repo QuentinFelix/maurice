@@ -104,7 +104,7 @@ class MauriceCap extends \Freesewing\Patterns\Core\Pattern
      */
     public function draft($model)
     {
-	    // Continue from sample
+        // Continue from sample
         $this->sample($model);
 
         // Finalize parts
@@ -215,12 +215,6 @@ class MauriceCap extends \Freesewing\Patterns\Core\Pattern
 		$this->setValue('sideHeadCirc',2* $p->curveLen(2, 4, 21, 19) + 2* $p->curveLen(19, 20, 7, 6));
 		$p->paths['seamline1']->setSample(true);
 		$p->paths['seamline2']->setSample(true);
-    }
-
-    protected function headCircDelta($model) 
-    {
-        $this->setValue('headCircActual', $this->v('sideHeadCirc') + $this->v('topHeadCirc'));
-        return $this->v('headCircActual') - ($model->m('headCircumference') + $this->o('headEase'));
     }
 
 	public function draftBrimBottom($model)
@@ -458,4 +452,11 @@ class MauriceCap extends \Freesewing\Patterns\Core\Pattern
         /** @var \Freesewing\Part $p */
         $p = $this->parts['examplePart'];
     }
+    
+    protected function headCircDelta($model) 
+    {
+        $this->setValue('headCircActual', $this->v('sideHeadCirc') + $this->v('topHeadCirc'));
+        return $this->v('headCircActual') - ($model->m('headCircumference') + $this->o('headEase'));
+    }
+
 }

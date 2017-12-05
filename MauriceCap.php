@@ -170,9 +170,8 @@ class MauriceCap extends \Freesewing\Patterns\Core\Pattern
 		$path = 'M 1 L 2 C  13 34 32 C 35 14 31 L 3 L 12 L 30 C 11 10 9 C 8 44 42 C 45 7 6 C 5 4 1 Z ';
 		$p->newPath('seamline', $path, ['class' => 'fabric']);	
 		$p->paths['seamline']->setSample(true);
-		 $this->setValue('topHeadCirc', 2*$p->distance(3,12));
-		 //$p->newPoint('samplerAnchor', ($p->x('1')+$p->x('3'))/2,($p->y('1')+$p->y('12'))/2);
-		 $p->newPoint('samplerAnchor', $p->x('2'),$p->y('2'));
+		$this->setValue('topHeadCirc', 2*$p->distance(3,12));
+		$p->newPoint('samplerAnchor', $p->x('2'),$p->y('2'));
     }
 	public function draftSide($model)
     {
@@ -248,6 +247,7 @@ class MauriceCap extends \Freesewing\Patterns\Core\Pattern
 		$p->newPath('seamline', $path, ['class' => 'fabric']);
 		$p->paths['seamline']->setSample(true);
     }
+
 	public function draftBrimTop($model)
     {	
 		$p = $this->parts['brimTop'];
@@ -303,11 +303,8 @@ class MauriceCap extends \Freesewing\Patterns\Core\Pattern
 		$p->newPath('seamline3', "M seamline60-startPoint L seamline65-endPoint z", ['class' => 'fabric']);
 		$p->newPath('seamline4', "M seamline65-startPoint L seamline60-endPoint z", ['class' => 'fabric']);
 		
-		//$p->paths['seamline60']->setSample(true);
-		//$p->paths['seamline65']->setSample(true);
-		//$p->paths['seamline3']->setSample(true);
-		//$p->paths['seamline4']->setSample(true);
     }
+
     /*
        _____ _             _ _
       |  ___(_)_ __   __ _| (_)_______
@@ -369,7 +366,7 @@ class MauriceCap extends \Freesewing\Patterns\Core\Pattern
 
         // Logo
         $p->addPoint('logoAnchor', $p->shiftFractionTowards(14,15, 0.5));
-        $p->newSnippet('logo', 'logo', 'logoAnchor');
+        $p->newSnippet('logo', 'logo-sm', 'logoAnchor');
 
         // Scalebox
         $p->newPoint('scaleboxAnchor', $p->x(6)-55,$p->y(2));
@@ -397,7 +394,7 @@ class MauriceCap extends \Freesewing\Patterns\Core\Pattern
 
         // Logo
         $p->addPoint('logoAnchor', $p->shift('titleAnchor',-5, 80));
-        $p->newSnippet('logo', 'logo', 'logoAnchor');
+        $p->newSnippet('logo', 'logo-sm', 'logoAnchor');
     }
 	
 	   public function finalizeBrimTop($model)
@@ -421,7 +418,7 @@ class MauriceCap extends \Freesewing\Patterns\Core\Pattern
 
         // Logo
         $p->addPoint('logoAnchor', $p->shift('titleAnchor',-5, 80));
-        $p->newSnippet('logo', 'logo', 'logoAnchor');
+        $p->newSnippet('logo', 'logo-sm', 'logoAnchor');
     }
 	
 		   public function finalizeBrimPlastic($model)
@@ -435,7 +432,7 @@ class MauriceCap extends \Freesewing\Patterns\Core\Pattern
 
         // Logo
         $p->addPoint('logoAnchor', $p->shift('titleAnchor',-5, 80));
-        $p->newSnippet('logo', 'logo', 'logoAnchor');
+        $p->newSnippet('logo', 'logo-sm', 'logoAnchor');
     }
 	
     /*

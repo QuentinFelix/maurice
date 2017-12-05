@@ -37,7 +37,6 @@ class MauriceCap extends \Freesewing\Patterns\Core\Pattern
     {
         $this->setValueIfUnset('countertest', 0);
         $this->setValueIfUnset('coef', 1);
-        $this->setValueIfUnset('headCirc', $model->getMeasurement('headCircumference'));
     }
 
 
@@ -70,14 +69,14 @@ class MauriceCap extends \Freesewing\Patterns\Core\Pattern
         do {
             $this->draftSide($model);
             $this->draftTop($model);
-            $this->headCircDelta() ;
+            $this->headCircDelta($model) ;
         
-            if ($this->headCircDelta()<0) $this->setValue('coef', $this->v('coef')*1.03);
+            if ($this->headCircDelta($model)<0) $this->setValue('coef', $this->v('coef')*1.03);
             else $this->setValue('coef', $this->v('coef')*0.99);
         
             $this->setValue('countertest', $this->v('countertest') + 1);
-            $this->msg('Run: '.$this->v('countertest').'; Head circumference actual: '. $this->v('headCircActual').' mm; Goal: '.$this->v('headCirc').'mm; Delta: '.$this->headCircDelta().'; Coef: '.$this->v('coef')) ; 
-        } while ($this->v('countertest') < 70 and abs($this->headCircDelta()) > 0.8);
+            $this->msg('Run: '.$this->v('countertest').'; Head circumference actual: '. $this->v('headCircActual').' mm; Goal: '.$model->m('headCircumference').'mm; Delta: '.$this->headCircDelta($model).'; Coef: '.$this->v('coef')) ; 
+        } while ($this->v('countertest') < 70 and abs($this->headCircDelta($model)) > 0.8);
         
         $this->draftBrimBottom($model);
         $this->draftBrimTop($model);
@@ -211,10 +210,10 @@ class MauriceCap extends \Freesewing\Patterns\Core\Pattern
 		$p->paths['seamline2']->setSample(true);
     }
 
-    protected function headCircDelta() 
+    protected function headCircDelta($model) 
     {
         $this->setValue('headCircActual', $this->v('sideHeadCirc') + $this->v('topHeadCirc'));
-        return $this->v('headCircActual') - $this->v('headCirc');
+        return $this->v('headCircActual') - $model->m('headCircumference');
     }
 
 	public function draftBrimBottom($model)

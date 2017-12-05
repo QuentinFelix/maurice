@@ -2,10 +2,6 @@
 /** Freesewing\Patterns\Beta\MauriceCap class */
 namespace Freesewing\Patterns\Beta;
 
-use Freesewing\Utils;
-use Freesewing\Path;
-use Freesewing\BezierToolbox;
-
 /**
  * Built by Quentin FELIX from Joost's Template
  * @author Joost De Cock <joost@decock.org>

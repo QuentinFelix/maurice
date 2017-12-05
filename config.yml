@@ -27,3 +27,8 @@ options:
         min: -2
         max: 5
         default: 0
+    headEase:
+        type: "measure"
+        min: 0
+        max: 25
+        default: 10

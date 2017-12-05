@@ -220,7 +220,7 @@ class MauriceCap extends \Freesewing\Patterns\Core\Pattern
     protected function headCircDelta($model) 
     {
         $this->setValue('headCircActual', $this->v('sideHeadCirc') + $this->v('topHeadCirc'));
-        return $this->v('headCircActual') - $model->m('headCircumference');
+        return $this->v('headCircActual') - ($model->m('headCircumference') + $this->o('headEase'));
     }
 
 	public function draftBrimBottom($model)

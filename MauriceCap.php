@@ -66,6 +66,7 @@ class MauriceCap extends \Freesewing\Patterns\Core\Pattern
     {
         $this->initialize($model);
 
+        $this->msg('Tweaking cap to fit head circumference:');
         do {
             $this->draftSide($model);
             $this->draftTop($model);
@@ -75,7 +76,14 @@ class MauriceCap extends \Freesewing\Patterns\Core\Pattern
             else $this->setValue('coef', $this->v('coef')*0.99);
         
             $this->setValue('countertest', $this->v('countertest') + 1);
-            $this->msg('Run: '.$this->v('countertest').'; Head circumference actual: '. $this->v('headCircActual').' mm; Goal: '.$model->m('headCircumference').'mm; Delta: '.$this->headCircDelta($model).'; Coef: '.$this->v('coef')) ; 
+            $this->msg(
+                'Run '.str_pad($this->v('countertest'),2,' ',STR_PAD_LEFT).
+                ': '.
+                str_pad(round($this->headCircDelta($model),2),5,' ',STR_PAD_LEFT).
+                'mm off (Coef = '.
+                round($this->v('coef'),4).
+                ')'
+            ) ; 
         } while ($this->v('countertest') < 70 and abs($this->headCircDelta($model)) > 0.8);
         
         $this->draftBrimBottom($model);

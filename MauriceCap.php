@@ -3,13 +3,14 @@
 namespace Freesewing\Patterns\Beta;
 
 /**
- * Built by Quentin FELIX from Joost's Template
+ * A flatcap pattern by Quentin Felix
  * @author Joost De Cock <joost@decock.org>
  * @copyright 2017 Joost De Cock
  * @license http://opensource.org/licenses/GPL-3.0 GNU General Public License, Version 3
  */
 class MauriceCap extends \Freesewing\Patterns\Core\Pattern
 {
+
     /*
         ___       _ _   _       _ _
        |_ _|_ __ (_) |_(_) __ _| (_)___  ___
@@ -20,25 +21,13 @@ class MauriceCap extends \Freesewing\Patterns\Core\Pattern
       Things we need to do before we can draft a pattern
     */
 
-    /**
-     * Set your constants here
-     */
+    /* the repartition between top and side. defined as side/total circumference */
     const REPARTITION_CIRCUMFERENCE = 0.8;
-	//the repartition between top and side. defined as side/total circumference
-	const BRIM_EXTRA = 0;
+    
+    const BRIM_EXTRA = 0;
 
     /**
      * Sets up options and values for our draft
-     *
-     * By branching this out of the sample/draft methods, we can
-     * set a bunch of options and values the influence the draft
-     * without having to touch the sample/draft methods
-     * When extending this pattern so we can just implement the
-     * initialize() method and re-use the other methods.
-     *
-     * Good to know:
-     * Options are typically provided by the user, but sometimes they are fixed
-     * Values are calculated for re-use later
      *
      * @param \Freesewing\Model $model The model to sample for
      *
@@ -46,10 +35,11 @@ class MauriceCap extends \Freesewing\Patterns\Core\Pattern
      */
     public function initialize($model)
     {
-        // You could fix options here. For example, when you extend a
-        // pattern that has options that you don't want to offer to users
-        //$this->setOptionIfUnset('brimExtra', self::BRIM_EXTRA);
+        $this->setValueIfUnset('countertest', 0);
+        $this->setValueIfUnset('coef', 1);
+        $this->setValueIfUnset('headCirc', $model->getMeasurement('headCircumference'));
     }
+
 
     /*
         ____             __ _
@@ -60,49 +50,6 @@ class MauriceCap extends \Freesewing\Patterns\Core\Pattern
 
       The actual sampling/drafting of the pattern
     */
-
-    public function draft($model)
-    {
-	        $this->initialize($model);
-			$this->setValue('countertest', 0);
-			$this->setValue('coef', 1);
-			$this->setValue('headCirc', $model->getMeasurement('headCircumference'));
-			do {
-			$this->draftSide($model);
-			$this->draftTop($model);
-			
-			
-			$this->headCircDelta() ;
-			
-			if ($this->headCircDelta()<0){
-			$this->setValue('coef', $this->v('coef')*1.03);
-			} else {
-            $this->setValue('coef', $this->v('coef')*0.99);
-			}
-			
-			$this->setValue('countertest', $this->v('countertest') + 1);
-			
-			$this->msg('Run: '.$this->v('countertest').'; Head circumference actual: '. $this->v('headCircActual').' mm; Goal: '.$this->v('headCirc').'mm; Delta: '.$this->headCircDelta().'; Coef: '.$this->v('coef')) ; 
-
-			}while ($this->v('countertest') <70 and abs($this->headCircDelta()) > 0.8);
-			$this->draftBrimBottom($model);
-			$this->draftBrimTop($model);
-			$this->draftBrimPlastic($model);
-			
-        // Finalize our example part
-			$this->finalizeSide($model);
-			$this->finalizeTop($model);
-			
-			$this->finalizeBrimBottom($model);
-			$this->finalizeBrimTop($model);
-			$this->finalizeBrimPlastic($model);
-
-        // Is this a paperless pattern?
-        if ($this->isPaperless) {
-            // Add paperless info to our example part
-           // $this->paperlessExamplePart($model);
-        }
-    }
 
     /**
      * Generates a sample of the pattern
@@ -118,16 +65,23 @@ class MauriceCap extends \Freesewing\Patterns\Core\Pattern
      */
     public function sample($model)
     {
-        // Setup all options and values we need
         $this->initialize($model);
 
-		$this->draft($model);
-        // Draft our example part
-			//$this->draftTop($model);
-			//$this->draftSide($model);
-			//$this->draftBrimBottom($model);
-			//$this->draftBrimTop($model);
-			//$this->draftBrimPlastic($model);
+        do {
+            $this->draftSide($model);
+            $this->draftTop($model);
+            $this->headCircDelta() ;
+        
+            if ($this->headCircDelta()<0) $this->setValue('coef', $this->v('coef')*1.03);
+            else $this->setValue('coef', $this->v('coef')*0.99);
+        
+            $this->setValue('countertest', $this->v('countertest') + 1);
+            $this->msg('Run: '.$this->v('countertest').'; Head circumference actual: '. $this->v('headCircActual').' mm; Goal: '.$this->v('headCirc').'mm; Delta: '.$this->headCircDelta().'; Coef: '.$this->v('coef')) ; 
+        } while ($this->v('countertest') < 70 and abs($this->headCircDelta()) > 0.8);
+        
+        $this->draftBrimBottom($model);
+        $this->draftBrimTop($model);
+        $this->draftBrimPlastic($model);
     }
 
     /**
@@ -141,20 +95,29 @@ class MauriceCap extends \Freesewing\Patterns\Core\Pattern
      *
      * @return void
      */
+    public function draft($model)
+    {
+	    // Continue from sample
+        $this->sample($model);
+
+        // Finalize parts
+        $this->finalizeSide($model);
+        $this->finalizeTop($model);
+        
+        $this->finalizeBrimBottom($model);
+        $this->finalizeBrimTop($model);
+        $this->finalizeBrimPlastic($model);
+
+        // Is this a paperless pattern?
+        if ($this->isPaperless) {
+            // Add paperless info to our example part
+           // $this->paperlessExamplePart($model);
+        }
+    }
+
 
     /**
-     * Drafts the examplePart
-     *
-     * We are using a draft[part name] scheme here but
-     * don't let that think that this is something specific
-     * to the draft service.
-     *
-     * This draft method does the basic drafting and is
-     * called by both the draft AND sample methods.
-     *
-     * The difference starts after this method is done.
-     * For sample, this is all we need, but draft calls
-     * the finalize[part name] method after this.
+     * Drafts the Top
      *
      * @param \Freesewing\Model $model The model to draft for
      *

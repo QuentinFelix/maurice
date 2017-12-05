@@ -117,8 +117,7 @@ class MauriceCap extends \Freesewing\Patterns\Core\Pattern
 
         // Is this a paperless pattern?
         if ($this->isPaperless) {
-            // Add paperless info to our example part
-           // $this->paperlessExamplePart($model);
+            $this->paperlessTop($model);
         }
     }
 
@@ -330,6 +329,9 @@ class MauriceCap extends \Freesewing\Patterns\Core\Pattern
         // Logo
         $p->addPoint('logoAnchor', $p->shift('titleAnchor',0, 50));
         $p->newSnippet('logo', 'logo', 'logoAnchor');
+
+        // Notches
+        $p->notch([6,9,2]);
     }
 	
 	 public function finalizeSide($model)
@@ -365,6 +367,10 @@ class MauriceCap extends \Freesewing\Patterns\Core\Pattern
         // Scalebox
         $p->newPoint('scaleboxAnchor', $p->x(6)-55,$p->y(2));
         $p->newSnippet('scalebox', 'scalebox', 'scaleboxAnchor');
+
+        // Notches
+        $p->notch([11]);
+
     }
 	
 	   public function finalizeBrimBottom($model)
@@ -389,6 +395,9 @@ class MauriceCap extends \Freesewing\Patterns\Core\Pattern
         // Logo
         $p->addPoint('logoAnchor', $p->shift('titleAnchor',-5, 80));
         $p->newSnippet('logo', 'logo-sm', 'logoAnchor');
+        
+        // Notches
+        $p->notch([4,10]);
     }
 	
 	   public function finalizeBrimTop($model)
@@ -413,6 +422,9 @@ class MauriceCap extends \Freesewing\Patterns\Core\Pattern
         // Logo
         $p->addPoint('logoAnchor', $p->shift('titleAnchor',-5, 80));
         $p->newSnippet('logo', 'logo-sm', 'logoAnchor');
+        
+        // Notches
+        $p->notch([4,10]);
     }
 	
 		   public function finalizeBrimPlastic($model)
@@ -427,6 +439,9 @@ class MauriceCap extends \Freesewing\Patterns\Core\Pattern
         // Logo
         $p->addPoint('logoAnchor', $p->shift('titleAnchor',-5, 80));
         $p->newSnippet('logo', 'logo-sm', 'logoAnchor');
+        
+        // Notches
+        $p->notch(['seamline60-curve-4TO502','seamline65-curve-10TO511']);
     }
 	
     /*
@@ -447,12 +462,21 @@ class MauriceCap extends \Freesewing\Patterns\Core\Pattern
      *
      * @return void
      */
-    public function paperlessExamplePart($model)
+    public function paperlessTop($model)
     {
         /** @var \Freesewing\Part $p */
-        $p = $this->parts['examplePart'];
+        $p = $this->parts['top'];
+
+
     }
-    
+
+
+
+
+
+
+
+
     protected function headCircDelta($model) 
     {
         $this->setValue('headCircActual', $this->v('sideHeadCirc') + $this->v('topHeadCirc'));

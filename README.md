@@ -1,2 +1,3 @@
 # maurice
-A flatcap pattern that should find its way into core
+
+A flatcap pattern by @QuentinFelix that should find its way into core

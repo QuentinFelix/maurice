@@ -1,0 +1,29 @@
+
+info:
+    name: "MauriceCap"
+    version: "1.0"
+    date: 20170118
+    author: "Quentin FELIX"
+    email: "quentin.felix@gadz.org"
+    company: "MyMooty"
+
+parts:
+    top: "Cap Top"
+    side: "Cap Side"
+    brimBottom: "Cap Brim Bottom"
+    brimTop: "Cap Brim Top"
+    brimPlastic: "Cap Brim Interfacing"
+
+languages:
+    en: "English"
+    fr: "Francais"
+
+measurements:
+    headCircumference: 600
+
+options:
+    brimLength:
+        type: "measure"
+        min: -2
+        max: 5
+        default: 0

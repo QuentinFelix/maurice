@@ -1,6 +1,6 @@
 <?php
-/** Freesewing\Patterns\Templates\PatternTemplate class */
-namespace Freesewing\Patterns\Acme;
+/** Freesewing\Patterns\Beta\MauriceCap class */
+namespace Freesewing\Patterns\Beta;
 
 use Freesewing\Utils;
 use Freesewing\Path;
